@@ -1,7 +1,6 @@
 ﻿using KeePass.App;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +11,7 @@ namespace HIBPOfflineCheck
     {
         private HIBPOfflineCheckExt ext;
 
-        private CancellationTokenSource cancellationTokenSource;
+        private readonly CancellationTokenSource cancellationTokenSource;
 
         public CreateBloomFilter(HIBPOfflineCheckExt ext)
         {
@@ -26,8 +25,10 @@ namespace HIBPOfflineCheck
 
         private void buttonSelectInput_Click(object sender, EventArgs e)
         {
-            var openDialog = new OpenFileDialog();
-            openDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+            var openDialog = new OpenFileDialog
+            {
+                Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            };
 
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
@@ -66,7 +67,10 @@ namespace HIBPOfflineCheck
         {
             if (textBoxOutput.Text == string.Empty)
             {
-                MessageBox.Show("Please specify an output file", "Output file not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Please specify an output file", 
+                    "Output file not found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

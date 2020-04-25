@@ -1,7 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -12,6 +12,8 @@ using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Security;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using KeePassLib.Collections;
 
 namespace HIBPOfflineCheck
@@ -19,8 +21,7 @@ namespace HIBPOfflineCheck
     public sealed class HIBPOfflineColumnProv : ColumnProvider
     {
         private string Status { get; set; }
-        private PwEntry PasswordEntry { get; set; }
-
+        
         public IPluginHost Host { private get; set; }
         public Options PluginOptions { get; set; }
 
@@ -41,9 +42,9 @@ namespace HIBPOfflineCheck
             return (strColumnName == PluginOptions.ColumnName);
         }
 
-        private void GetPasswordStatus()
+        private void GetPasswordStatus(PwEntry passwordEntry, string passwordSha)
         {
-            currentStatus = GetCurrentStatus(PasswordEntry);
+            currentStatus = GetCurrentStatus(passwordEntry);
 
             if (currentStatus == PluginOptions.ExcludedText)
             {
@@ -53,26 +54,29 @@ namespace HIBPOfflineCheck
 
             if (PluginOptions.CheckMode == Options.CheckModeType.Offline)
             {
-                GetOfflineStatus();
+                GetOfflineStatus(passwordEntry, passwordSha);
             }
             else if (PluginOptions.CheckMode == Options.CheckModeType.Online)
             {
-                GetOnlineStatus();
+                GetOnlineStatus(passwordEntry, passwordSha);
             }
             else if (PluginOptions.CheckMode == Options.CheckModeType.BloomFilter)
             {
-                GetBloomStatus();
+                GetBloomStatus(passwordEntry, passwordSha);
             }
 
             receivedStatus = true;
         }
 
-        private string GetPasswordSHA()
+        private string GetPasswordHash(PwEntry passwordEntry)
         {
             using (var sha1 = new SHA1CryptoServiceProvider())
             {
-                var context = new SprContext(PasswordEntry, Host.Database, SprCompileFlags.All);
-                var password = SprEngine.Compile(PasswordEntry.Strings.GetSafe(PwDefs.PasswordField).ReadString(), context);
+                var context = new SprContext(
+                    passwordEntry, Host.Database, SprCompileFlags.All);
+                var password = SprEngine.Compile(
+                    passwordEntry.Strings.GetSafe(
+                        PwDefs.PasswordField).ReadString(), context);
 
                 var pwdShaBytes = sha1.ComputeHash(Encoding.UTF8.GetBytes(password));
                 var sb = new StringBuilder(2 * pwdShaBytes.Length);
@@ -86,9 +90,8 @@ namespace HIBPOfflineCheck
             }
         }
 
-        private void GetOnlineStatus()
+        private void GetOnlineStatus(PwEntry passwordEntry, string pwdSha)
         {
-            var pwdSha = GetPasswordSHA();
             var truncatedSha = pwdSha.Substring(0, 5);
 
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
@@ -121,7 +124,9 @@ namespace HIBPOfflineCheck
                         foreach (var line in lines)
                         {
                             string fullSha = truncatedSha + line;
-                            var compare = string.Compare(pwdSha, fullSha.Substring(0, pwdSha.Length), StringComparison.Ordinal);
+                            var compare = string.Compare(
+                                pwdSha,
+                                fullSha.Substring(0, pwdSha.Length), StringComparison.Ordinal);
 
                             if (compare == 0)
                             {
@@ -149,10 +154,8 @@ namespace HIBPOfflineCheck
             }
         }
 
-        private void GetOfflineStatus()
+        private void GetOfflineStatus(PwEntry passwordEntry, string passwordSha)
         {
-            string pwdShaStr = GetPasswordSHA();
-
             var latestFile = PluginOptions.HIBPFileName;
             if (!File.Exists(latestFile))
             {
@@ -166,7 +169,7 @@ namespace HIBPOfflineCheck
                 try
                 {
                     Status = PluginOptions.SecureText;
-                    var shaLen = pwdShaStr.Length;
+                    var shaLen = passwordSha.Length;
 
                     var low = 0L;
                     var high = fs.Length;
@@ -188,7 +191,7 @@ namespace HIBPOfflineCheck
 
                         if (line != null)
                         {
-                            var compare = string.Compare(pwdShaStr, line.Substring(0, shaLen), StringComparison.Ordinal);
+                            var compare = string.Compare(passwordSha, line.Substring(0, shaLen), StringComparison.Ordinal);
 
                             if (compare < 0)
                             {
@@ -221,10 +224,8 @@ namespace HIBPOfflineCheck
             }
         }
 
-        private void GetBloomStatus()
+        private void GetBloomStatus(PwEntry passwordEntry, string passwordSha)
         {
-            string pwdShaStr = GetPasswordSHA();
-
             var bloomFilterFile = PluginOptions.BloomFilter;
             if (!File.Exists(bloomFilterFile))
             {
@@ -237,7 +238,7 @@ namespace HIBPOfflineCheck
                 BloomFilter = new BloomFilter(bloomFilterFile);
             }
 
-            if (BloomFilter.Contains(pwdShaStr))
+            if (BloomFilter.Contains(passwordSha))
             {
                 Status = PluginOptions.InsecureText;
                 insecureWarning = true;
@@ -252,13 +253,12 @@ namespace HIBPOfflineCheck
         {
             if (strColumnName == null || pe == null) { Debug.Assert(false); return; }
             if (strColumnName != PluginOptions.ColumnName) { return; }
-
-            PasswordEntry = pe;
+            
             bulkCheck = false;
 
-            GetPasswordStatus();
+            GetPasswordStatus(pe, GetPasswordHash(pe));
 
-            TouchEntry(PasswordEntry);
+            TouchEntry(pe);
         }
 
         private void PwdTouchedHandler(object sender, ObjectTouchedEventArgs e)
@@ -268,8 +268,7 @@ namespace HIBPOfflineCheck
             {
                 if (receivedStatus == false)
                 {
-                    PasswordEntry = pe;
-                    GetPasswordStatus();
+                    GetPasswordStatus(pe, GetPasswordHash(pe));
 
                     if (insecureWarning && PluginOptions.WarningDialog)
                     {
@@ -280,7 +279,7 @@ namespace HIBPOfflineCheck
 
                 if (currentStatus != Status)
                 {
-                    UpdateStatus();
+                    UpdateStatus(pe);
                 }
 
                 ResetState();
@@ -332,11 +331,11 @@ namespace HIBPOfflineCheck
             return pe.Strings.GetSafe(PluginOptions.ColumnName).ReadString();
         }
 
-        private void UpdateStatus()
+        private void UpdateStatus(PwEntry passwordEntry)
         {
             MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
 
-            PasswordEntry.Strings.Set(PluginOptions.ColumnName, new ProtectedString(false, Status));
+            passwordEntry.Strings.Set(PluginOptions.ColumnName, new ProtectedString(false, Status));
 
             if (bulkCheck == false)
             {
@@ -355,13 +354,13 @@ namespace HIBPOfflineCheck
             UIUtil.Scroll(lv, scroll, true);
         }
 
-        public void PasswordCheckWorker()
+        public void PasswordCheckWorker(PwEntry passwordEntry, string passwordSha)
         {
-            GetPasswordStatus();
+            GetPasswordStatus(passwordEntry, passwordSha);
 
             if (PluginOptions.CheckMode == Options.CheckModeType.Online)
             {
-                System.Threading.Thread.Sleep(1600);
+                Thread.Sleep(1600);
             }
         }
 
@@ -375,13 +374,16 @@ namespace HIBPOfflineCheck
             var allEntries = new PwObjectList<PwEntry>();
             Host.Database.RootGroup.SearchEntries(SearchParameters.None, allEntries);
 
-            for (uint i = 0; i < allEntries.UCount; i++)
-            {
-                PasswordEntry = allEntries.GetAt(i);
+            var entries = allEntries.Select(x =>
+                new { password = x, hash = GetPasswordHash(x) });
+            int index = 0;
 
-                await System.Threading.Tasks.Task.Run(() => PasswordCheckWorker());
-                TouchEntry(PasswordEntry);
-                progressDisplay.progressBar.Value = ((int) i + 1) * 100 / ((int) allEntries.UCount);
+            foreach (var entry in entries)
+            {
+                await Task.Run(() => PasswordCheckWorker(entry.password, entry.hash));;
+                TouchEntry(entry.password);
+
+                progressDisplay.progressBar.Value = (index++) * 100 / allEntries.Count();
 
                 if (progressDisplay.UserTerminated)
                 {
@@ -412,12 +414,12 @@ namespace HIBPOfflineCheck
 
             for (uint i = 0; i < allEntries.UCount; i++)
             {
-                PasswordEntry = allEntries.GetAt(i);
+                var entry = allEntries.GetAt(i);
 
-                PasswordEntry.Strings.Remove(PluginOptions.ColumnName);
+                entry.Strings.Remove(PluginOptions.ColumnName);
                 Status = null;
                 receivedStatus = true;
-                TouchEntry(PasswordEntry);
+                TouchEntry(entry);
             }
 
             UpdateUI();
@@ -433,18 +435,25 @@ namespace HIBPOfflineCheck
             MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
             PwEntry[] selectedEntries = mainForm.GetSelectedEntries();
 
-            for (int j = 0; j < selectedEntries.Length; j++)
+            if (selectedEntries != null)
             {
-                PasswordEntry = selectedEntries[j];
+                var entries = selectedEntries.Select(x =>
+                    new { password = x, hash = GetPasswordHash(x)});
+                int index = 0;
 
-                await System.Threading.Tasks.Task.Run(() => PasswordCheckWorker());
-                TouchEntry(PasswordEntry);
-                progressDisplay.progressBar.Value = (j + 1) * 100 / selectedEntries.Length;
-
-                if (progressDisplay.UserTerminated)
+                foreach (var entry in entries)
                 {
-                    progressDisplay.Close();
-                    break;
+                    await Task.Run(() => PasswordCheckWorker(entry.password, entry.hash));
+
+                    TouchEntry(entry.password);
+
+                    progressDisplay.progressBar.Value = (index++) * 100 / selectedEntries.Length;
+
+                    if (progressDisplay.UserTerminated)
+                    {
+                        progressDisplay.Close();
+                        break;
+                    }
                 }
             }
 
@@ -462,12 +471,10 @@ namespace HIBPOfflineCheck
 
             foreach (PwEntry pwEntry in selectedEntries)
             {
-                PasswordEntry = pwEntry;
-
-                PasswordEntry.Strings.Remove(PluginOptions.ColumnName);
+                pwEntry.Strings.Remove(PluginOptions.ColumnName);
                 Status = null;
                 receivedStatus = true;
-                TouchEntry(PasswordEntry);
+                TouchEntry(pwEntry);
             }
 
             UpdateUI();
@@ -482,11 +489,9 @@ namespace HIBPOfflineCheck
 
             foreach (PwEntry pwEntry in selectedEntries)
             {
-                PasswordEntry = pwEntry;
-
                 Status = PluginOptions.ExcludedText;
                 receivedStatus = true;
-                TouchEntry(PasswordEntry);
+                TouchEntry(pwEntry);
             }
 
             UpdateUI();
