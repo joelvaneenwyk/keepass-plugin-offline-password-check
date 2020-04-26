@@ -1,7 +1,7 @@
 @echo off
 
 set PluginRoot=%~dp0..
-set KeePassExe=%PluginRoot%\Lib\KeePass.exe
+set KeePassExe=%PluginRoot%\..\packages\KeePass.2.44.0.30973\lib\net45\KeePass.exe
 Set BuildPath=%PluginRoot%\Bin
 set OutputPath=%BuildPath%\plgx
 

@@ -1,8 +1,9 @@
 .vs
+packages/*
 HIBPOfflineCheck/bin/*
 HIBPOfflineCheck/obj/*
-screen.png
 HIBPOfflineCheck/plgx/*
+screen.png
 *.plgx
 release_checklist.txt
 HIBPOfflineCheck.plgx.asc

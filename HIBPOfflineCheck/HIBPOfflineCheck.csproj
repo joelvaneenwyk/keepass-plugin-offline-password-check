@@ -34,8 +34,8 @@
     <LangVersion>5</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KeePass">
-      <HintPath>C:\Program Files (x86)\KeePass Password Safe 2\KeePass.exe</HintPath>
+    <Reference Include="KeePass, Version=2.44.0.30973, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\KeePass.2.44.0.30973\lib\net45\KeePass.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.DirectoryServices" />
@@ -91,9 +91,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\Nuvola\B48x48_KOrganizer.png" />
     <None Include="Util\build_plgx.bat" />
     <None Include="Util\mihaifm.asc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="KeePass.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
