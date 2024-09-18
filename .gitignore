@@ -1,8 +1,8 @@
-.vs
-packages/*
-HIBPOfflineCheck/bin/*
-HIBPOfflineCheck/obj/*
-HIBPOfflineCheck/plgx/*
+.vs/
+packages/
+HIBPOfflineCheck/bin/
+HIBPOfflineCheck/obj/
+HIBPOfflineCheck/plgx/
 screen.png
 *.plgx
 release_checklist.txt
