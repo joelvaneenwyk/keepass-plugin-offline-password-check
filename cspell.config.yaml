@@ -1,0 +1,11 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions:
+  - name: keepass-plugin-offline-password-check
+    path: ./.github/config/keepass-plugin-offline-password-check.dict
+    addWords: true
+dictionaries:
+  - keepass-plugin-offline-password-check
+words: []
+ignoreWords: []
+import: []
