@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main, develop]
 
+env:
+  NUGET_URL: https://nuget.pkg.github.com/joelvaneenwyk/index.json
+  PROJECT_NAME: HIBPOfflineCheck
+  PROJECT_VERSION: 1.7.11.0
+
 jobs:
   build:
     strategy:
@@ -13,11 +18,7 @@ jobs:
       matrix:
         configuration: [Debug, Release]
         platform: [x64, Any CPU]
-
     runs-on: windows-latest
-    env:
-      Solution_Name: HIBPOfflineCheck.sln
-
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -40,11 +41,19 @@ jobs:
       run: nuget restore
 
     - name: Build
-      run: msbuild $env:Solution_Name /p:Configuration="${{ matrix.configuration }}" /p:Platform="${{ matrix.platform }}"
+      run: msbuild "${{ env.PROJECT_NAME }}.sln" /p:Configuration="${{ matrix.configuration }}" /p:Platform="${{ matrix.platform }}"
 
-    - name: Build solution and generate NuGet package
+    - name: Create Package
       run: |
-        dotnet pack -c Release -o out
+        dotnet pack "${{ env.PROJECT_NAME }}" \
+        -c Release \
+        -o ./out \
+        -p:PackageVersion=${{ env.PROJECT_VERSION }}
 
-    - name: Push generated package to GitHub registry
-      run: dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols true
+    - name: Publish to GitHub Packages
+      if: endsWith(github.ref, '/main')
+      run: |
+        dotnet nuget push \
+        ./out/${{ env.PROJECT_NAME }}.${{ env.PROJECT_VERSION }}.nupkg \
+        --source ${{ env.NUGET_URL }} \
+        --api-key ${{ secrets.GITHUB_TOKEN }}

@@ -9,3 +9,5 @@ release_checklist.txt
 HIBPOfflineCheck.plgx.asc
 *temp.bat
 *.csproj.user
+out/
+.git/
