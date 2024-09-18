@@ -1,27 +1,27 @@
-﻿using System;
+﻿using KeePass.Forms;
+using KeePass.Plugins;
+using KeePass.UI;
+using KeePass.Util.Spr;
+using KeePassLib;
+using KeePassLib.Collections;
+using KeePassLib.Security;
+using KeePassLib.Serialization;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Forms;
-using KeePass.Forms;
-using KeePass.Plugins;
-using KeePass.UI;
-using KeePass.Util.Spr;
-using KeePassLib;
-using KeePassLib.Security;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using KeePassLib.Collections;
+using System.Windows.Forms;
 
 namespace HIBPOfflineCheck
 {
     public sealed class HIBPOfflineColumnProv : ColumnProvider
     {
         private string Status { get; set; }
-        
+
         public IPluginHost Host { private get; set; }
         public Options PluginOptions { get; set; }
 
@@ -137,7 +137,7 @@ namespace HIBPOfflineCheck
                     reader.Close();
                     stream.Close();
                 }
-                
+
             }
             catch
             {
@@ -244,7 +244,7 @@ namespace HIBPOfflineCheck
         {
             if (strColumnName == null || pe == null) { Debug.Assert(false); return; }
             if (strColumnName != PluginOptions.ColumnName) { return; }
-            
+
             bulkCheck = false;
 
             GetPasswordStatus(pe, GetPasswordHash(pe));
@@ -385,7 +385,7 @@ namespace HIBPOfflineCheck
 
             foreach (var entry in entries)
             {
-                await Task.Run(() => PasswordCheckWorker(entry.password, entry.hash));;
+                await Task.Run(() => PasswordCheckWorker(entry.password, entry.hash)); ;
                 TouchEntry(entry.password);
 
                 progressDisplay.progressBar.Value = (index++) * 100 / allEntries.Count();
@@ -398,7 +398,7 @@ namespace HIBPOfflineCheck
             }
 
             UpdateUI();
-            
+
             progressDisplay.Close();
         }
 
@@ -495,7 +495,7 @@ namespace HIBPOfflineCheck
             for (int j = 0; j < selectedEntries.Length; j++)
             {
                 var entries = selectedEntries.Select(x =>
-                    new { password = x, hash = GetPasswordHash(x)});
+                    new { password = x, hash = GetPasswordHash(x) });
                 int index = 0;
 
                 foreach (var entry in entries)
@@ -559,7 +559,7 @@ namespace HIBPOfflineCheck
 
             UpdateUI();
         }
-        
+
         public void EntrySaved(object sender, EventArgs e)
         {
             PwEntryForm form = sender as PwEntryForm;
