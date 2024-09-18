@@ -1,5 +1,6 @@
 ﻿using KeePass.App;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +12,9 @@ namespace HIBPOfflineCheck
     {
         private HIBPOfflineCheckExt ext;
 
-        private readonly CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource cancellationTokenSource;
+        private Stopwatch stopwatch;
+        private System.Windows.Forms.Timer timer;
 
         public CreateBloomFilter(HIBPOfflineCheckExt ext)
         {
@@ -21,6 +24,11 @@ namespace HIBPOfflineCheck
             textBoxInput.Text = ext.Prov.PluginOptions.HIBPFileName;
             Icon = AppIcons.Default;
             cancellationTokenSource = new CancellationTokenSource();
+            stopwatch = new Stopwatch();
+            timer = new System.Windows.Forms.Timer();
+
+            timer.Tick += TimerTick;
+            timer.Interval = 1000;
         }
 
         private void buttonSelectInput_Click(object sender, EventArgs e)
@@ -141,23 +149,44 @@ namespace HIBPOfflineCheck
 
         private async void Bloom()
         {
+            ToggleControls(enabled: false);
+
             progressBar.Show();
-            labelInfo.Text = "Generating filter...";
+
+            stopwatch.Start();
+            timer.Start();
 
             var progress = new Progress<int>(percent =>
             {
                 progressBar.Value = percent;
-
-                var estimatedTime = 40;
-                int timeRemaining = estimatedTime - percent * estimatedTime / 100;
-                labelInfo.Text = "Time remaining: " + timeRemaining + (timeRemaining == 1 ? " minute" : " minutes");
             });
 
             CancellationToken token = cancellationTokenSource.Token;
 
             await Task.Run(() => BloomWorker(progress, token));
 
-            labelInfo.Text = "Bloom filter successfully created!";
+            labelInfo.Text = "Bloom filter successfully generated in: " + stopwatch.Elapsed.ToString("hh\\:mm\\:ss");
+            timer.Stop();
+            stopwatch.Stop();
+            stopwatch.Reset();
+            progressBar.Value = 0;
+            progressBar.Hide();
+
+            ToggleControls(enabled: true);
+        }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            labelInfo.Text = "Elapsed time: " + stopwatch.Elapsed.ToString("hh\\:mm\\:ss");
+        }
+
+        private void ToggleControls(bool enabled)
+        {
+            this.textBoxInput.Enabled = enabled;
+            this.textBoxOutput.Enabled = enabled;
+            this.buttonSelectInput.Enabled = enabled;
+            this.buttonSelectOutput.Enabled = enabled;
+            this.buttonCreate.Enabled = enabled;
         }
     }
 }

@@ -94,59 +94,50 @@ namespace HIBPOfflineCheck
         {
             var truncatedSha = pwdSha.Substring(0, 5);
 
-            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-
             var url = "https://api.pwnedpasswords.com/range/" + truncatedSha;
 
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-            request.UserAgent = "KeePass-HIBP-plug/1.0";
+            IOConnectionInfo ioc = new IOConnectionInfo
+            {
+                Path = url
+            };
 
             try
             {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (Stream stream = IOConnection.OpenRead(ioc))
+                using (StreamReader reader = new StreamReader(stream))
                 {
-                    if (response.StatusCode != HttpStatusCode.OK)
+                    string responseFromServer = reader.ReadToEnd();
+                    var lines = responseFromServer.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+                    Status = PluginOptions.SecureText;
+
+                    foreach (var line in lines)
                     {
-                        Status = "HIBP API error";
-                        return;
-                    }
+                        if (truncatedSha.Length + line.Length < pwdSha.Length)
+                            continue;
 
-                    using (Stream stream = response.GetResponseStream())
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        string responseFromServer = reader.ReadToEnd();
-                        var lines = responseFromServer.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                        string fullSha = truncatedSha + line;
+                        var compare = string.Compare(pwdSha, fullSha.Substring(0, pwdSha.Length), StringComparison.Ordinal);
 
-                        Status = PluginOptions.SecureText;
-
-                        foreach (var line in lines)
+                        if (compare == 0)
                         {
-                            string fullSha = truncatedSha + line;
-                            var compare = string.Compare(
-                                pwdSha,
-                                fullSha.Substring(0, pwdSha.Length), StringComparison.Ordinal);
+                            var tokens = line.Split(':');
+                            Status = PluginOptions.InsecureText;
+                            insecureWarning = true;
 
-                            if (compare == 0)
+                            if (PluginOptions.BreachCountDetails)
                             {
-                                var tokens = line.Split(':');
-                                Status = PluginOptions.InsecureText;
-                                insecureWarning = true;
-
-                                if (PluginOptions.BreachCountDetails)
-                                {
-                                    Status += " (password count: " + tokens[1].Trim() + ")";
-                                }
-
-                                break;
+                                Status += " (password count: " + tokens[1].Trim() + ")";
                             }
-                        }
 
-                        reader.Close();
-                        stream.Close();
+                            break;
+                        }
                     }
+
+                    reader.Close();
+                    stream.Close();
                 }
+                
             }
             catch
             {
@@ -264,8 +255,17 @@ namespace HIBPOfflineCheck
         private void PwdTouchedHandler(object sender, ObjectTouchedEventArgs e)
         {
             PwEntry pe = sender as PwEntry;
+
             if (e.Modified)
             {
+                if (pe.History.UCount > 0)
+                {
+                    var lastPwEntry = pe.History.GetAt(pe.History.UCount - 1);
+
+                    if (lastPwEntry.Strings.GetSafe(PwDefs.PasswordField).Equals(pe.Strings.GetSafe(PwDefs.PasswordField)))
+                        return;
+                }
+
                 if (receivedStatus == false)
                 {
                     GetPasswordStatus(pe, GetPasswordHash(pe));
@@ -308,7 +308,9 @@ namespace HIBPOfflineCheck
                 pe.Touched -= PwdTouchedHandler;
                 pe.Touched += PwdTouchedHandler;
 
+                var lastModificationTime = pe.LastModificationTime;
                 pe.Touch(true);
+                pe.LastModificationTime = lastModificationTime;
             }
 
             ResetState();
@@ -368,6 +370,9 @@ namespace HIBPOfflineCheck
         {
             bulkCheck = true;
 
+            if (Host.Database == null || Host.Database.RootGroup == null)
+                return;
+
             var progressDisplay = new ProgressDisplay();
             progressDisplay.Show();
 
@@ -399,15 +404,16 @@ namespace HIBPOfflineCheck
 
         public void ClearAll()
         {
+            if (Host.Database == null || Host.Database.RootGroup == null)
+                return;
+
             DialogResult dialog = MessageBox.Show("This will remove the HIBP status for all entries in the database. Continue?",
-                String.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
             if (dialog == DialogResult.Cancel)
                 return;
 
             bulkCheck = true;
-
-            MainForm mainForm = Host.MainWindow;
 
             PwObjectList<PwEntry> allEntries = new PwObjectList<PwEntry>();
             Host.Database.RootGroup.SearchEntries(SearchParameters.None, allEntries);
@@ -425,17 +431,68 @@ namespace HIBPOfflineCheck
             UpdateUI();
         }
 
+        public void OnMenuFindPwned(object sender, EventArgs e)
+        {
+            if (Host.Database == null || Host.Database.RootGroup == null)
+                return;
+
+            PwGroup pgResults = new PwGroup(true, true, string.Empty, PwIcon.List)
+            {
+                IsVirtual = true
+            };
+
+            PwGroup recycleBin = Host.Database.RootGroup.FindGroup(Host.Database.RecycleBinUuid, true);
+
+            Host.Database.RootGroup.TraverseTree(TraversalMethod.PreOrder, null, delegate (PwEntry pe)
+            {
+                var status = GetCurrentStatus(pe);
+                if (status != null && status.StartsWith(PluginOptions.InsecureText))
+                {
+                    if (PluginOptions.ExcludeExpired && pe.Expires && pe.ExpiryTime.CompareTo(DateTime.UtcNow) <= 0)
+                        return true;
+
+                    if (PluginOptions.ExcludeRecycleBin)
+                    {
+                        var ancestor = pe.ParentGroup;
+
+                        while (ancestor != null)
+                        {
+                            if (ancestor == recycleBin)
+                                return true;
+
+                            ancestor = ancestor.ParentGroup;
+                        }
+                    }
+
+                    pgResults.AddEntry(pe, false, false);
+                }
+
+                return true;
+            });
+
+            var sp = new SearchParameters
+            {
+                RespectEntrySearchingDisabled = true
+            };
+
+            MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
+            mainForm.UpdateUI(false, null, false, null, true, pgResults, false);
+        }
+
         public async void OnMenuHIBP(object sender, EventArgs e)
         {
             bulkCheck = true;
 
-            var progressDisplay = new ProgressDisplay();
-            progressDisplay.Show();
-
             MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
             PwEntry[] selectedEntries = mainForm.GetSelectedEntries();
 
-            if (selectedEntries != null)
+            if (selectedEntries == null)
+                return;
+
+            var progressDisplay = new ProgressDisplay();
+            progressDisplay.Show();
+
+            for (int j = 0; j < selectedEntries.Length; j++)
             {
                 var entries = selectedEntries.Select(x =>
                     new { password = x, hash = GetPasswordHash(x)});
@@ -464,10 +521,13 @@ namespace HIBPOfflineCheck
 
         public void OnMenuHIBPClear(object sender, EventArgs e)
         {
+            bulkCheck = true;
+
             MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
             PwEntry[] selectedEntries = mainForm.GetSelectedEntries();
 
-            bulkCheck = true;
+            if (selectedEntries == null)
+                return;
 
             foreach (PwEntry pwEntry in selectedEntries)
             {
@@ -482,10 +542,13 @@ namespace HIBPOfflineCheck
 
         public void OnMenuHIBPExclude(object sender, EventArgs e)
         {
+            bulkCheck = true;
+
             MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
             PwEntry[] selectedEntries = mainForm.GetSelectedEntries();
 
-            bulkCheck = true;
+            if (selectedEntries == null)
+                return;
 
             foreach (PwEntry pwEntry in selectedEntries)
             {

@@ -1,5 +1,5 @@
-﻿using KeePass.UI;
-using KeePass.App;
+﻿using KeePass.App;
+using KeePass.UI;
 using KeePassLib;
 using System;
 using System.Windows.Forms;
@@ -29,6 +29,8 @@ namespace HIBPOfflineCheck
             options.InsecureText = textBoxInsecureText.Text;
             options.ExcludedText = textBoxExcludedText.Text;
             options.BreachCountDetails = checkBoxBreachCountDetails.Checked;
+            options.ExcludeRecycleBin = checkBoxExcludeRecycleBin.Checked;
+            options.ExcludeExpired = checkBoxExcludeExpired.Checked;
             options.WarningDialog = checkBoxWarningDialog.Checked;
             options.AutoCheck = checkBoxAutoCheck.Checked;
             options.WarningDialogText = textBoxWarningDialog.Text;
@@ -77,6 +79,8 @@ namespace HIBPOfflineCheck
             textBoxInsecureText.Text = options.InsecureText;
             textBoxExcludedText.Text = options.ExcludedText;
             checkBoxBreachCountDetails.Checked = options.BreachCountDetails;
+            checkBoxExcludeRecycleBin.Checked = options.ExcludeRecycleBin;
+            checkBoxExcludeExpired.Checked = options.ExcludeExpired;
             checkBoxWarningDialog.Checked = options.WarningDialog;
             checkBoxAutoCheck.Checked = options.AutoCheck;
             textBoxWarningDialog.Text = options.WarningDialogText;

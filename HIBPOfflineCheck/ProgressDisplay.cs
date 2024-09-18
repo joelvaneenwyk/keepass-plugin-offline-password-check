@@ -11,6 +11,7 @@ namespace HIBPOfflineCheck
         {
             InitializeComponent();
             UserTerminated = false;
+            ShowInTaskbar = true;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

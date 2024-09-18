@@ -1,11 +1,11 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using KeePass.Forms;
 using KeePass.Plugins;
-using System.IO;
-using KeePassLib.Utility;
-using KeePass.Util;
 using KeePass.UI;
-using KeePass.Forms;
+using KeePass.Util;
+using KeePassLib.Utility;
+using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace HIBPOfflineCheck
 {
@@ -113,6 +113,19 @@ namespace HIBPOfflineCheck
                 hibpExcludeMenuItem.Click += new EventHandler(prov.OnMenuHIBPExclude);
                 hibpMenuItem.DropDownItems.Add(hibpExcludeMenuItem);
             }
+
+            var m_menuFind = Host.MainWindow.MainMenu.Items.Find("m_menuFind", true);
+
+            if (m_menuFind.Length > 0)
+            {
+                var findMenu = m_menuFind[0] as ToolStripMenuItem;
+
+                findMenu.DropDownItems.Add(new ToolStripSeparator());
+
+                var findPwnedItem = new ToolStripMenuItem("Pwned Passwords");
+                findPwnedItem.Click += new EventHandler(prov.OnMenuFindPwned);
+                findMenu.DropDownItems.Add(findPwnedItem);
+            }
         }
 
         private static string GetDefaultFileName()
@@ -168,6 +181,8 @@ namespace HIBPOfflineCheck
                 InsecureText = config.GetString(Options.Names.INSECURE_TEXT) ?? "Pwned",
                 ExcludedText = config.GetString(Options.Names.EXCLUDED_TEXT) ?? "Excluded",
                 BreachCountDetails = config.GetBool(Options.Names.BREACH_COUNT_DETAILS, true),
+                ExcludeRecycleBin = config.GetBool(Options.Names.EXCLUDE_RECYCLE_BIN, false),
+                ExcludeExpired = config.GetBool(Options.Names.EXCLUDE_EXPIRED, false),
                 WarningDialog = config.GetBool(Options.Names.WARNING_DIALOG, false),
                 AutoCheck = config.GetBool(Options.Names.AUTO_CHECK, true),
                 WarningDialogText = XmlUnescape(config.GetString(Options.Names.WARNING_DIALOG_TEXT) ?? "WARNING - INSECURE PASSWORD\r\n\r\nThis password is insecure and publicly known"),
@@ -191,6 +206,8 @@ namespace HIBPOfflineCheck
             config.SetString(Options.Names.EXCLUDED_TEXT, options.ExcludedText);
             config.SetString(Options.Names.INSECURE_TEXT, options.InsecureText);
             config.SetBool(Options.Names.BREACH_COUNT_DETAILS, options.BreachCountDetails);
+            config.SetBool(Options.Names.EXCLUDE_RECYCLE_BIN, options.ExcludeRecycleBin);
+            config.SetBool(Options.Names.EXCLUDE_EXPIRED, options.ExcludeExpired);
             config.SetBool(Options.Names.WARNING_DIALOG, options.WarningDialog);
             config.SetBool(Options.Names.AUTO_CHECK, options.AutoCheck);
             config.SetString(Options.Names.WARNING_DIALOG_TEXT, XmlEscape(options.WarningDialogText));
