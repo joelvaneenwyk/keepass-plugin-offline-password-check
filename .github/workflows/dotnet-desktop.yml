@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         configuration: [Debug, Release]
         platform: [x64, Any CPU]
