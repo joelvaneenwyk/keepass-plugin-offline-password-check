@@ -22,10 +22,7 @@
     <Content Include="keepass_256x256.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="KeePass" Version="2.57.0.28775">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="KeePass" Version="2.57.0.28775" />
     <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
 </Project>
