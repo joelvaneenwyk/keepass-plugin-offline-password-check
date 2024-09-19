@@ -4,14 +4,14 @@ using KeePassLib;
 using System;
 using System.Windows.Forms;
 
-namespace HIBPOfflineCheck
+namespace OfflinePasswordCheck
 {
-    public partial class HIBPOfflineCheckOptions : Form
+    public partial class OfflinePasswordCheckOptions : Form
     {
-        private HIBPOfflineCheckExt ext;
+        private OfflinePasswordCheckExt ext;
         private Options options;
 
-        public HIBPOfflineCheckOptions(HIBPOfflineCheckExt ext)
+        public OfflinePasswordCheckOptions(OfflinePasswordCheckExt ext)
         {
             this.ext = ext;
             InitializeComponent();
@@ -60,12 +60,12 @@ namespace HIBPOfflineCheck
             return true;
         }
 
-        private void HIBPOfflineCheckOptions_Load(object sender, EventArgs e)
+        private void OfflinePasswordCheckOptions_Load(object sender, EventArgs e)
         {
             Icon = AppIcons.Default;
 
-            pb_BannerImage.Image = BannerFactory.CreateBanner(pb_BannerImage.Width, pb_BannerImage.Height, 
-                BannerStyle.Default, Properties.Resources.B48x48_KOrganizer, 
+            pb_BannerImage.Image = BannerFactory.CreateBanner(pb_BannerImage.Width, pb_BannerImage.Height,
+                BannerStyle.Default, Properties.Resources.B48x48_KOrganizer,
                 "HIBP Offline Check Options", "Manage plugin settings.");
 
             options = ext.LoadOptions();

@@ -8,12 +8,12 @@ set OutputPath=%BuildPath%\plgx
 if not exist %OutputPath% mkdir %OutputPath%
 
 echo Copying source to output folder: %OutputPath%
-xcopy /Y %PluginRoot%\..\HIBPOfflineCheck.sln %OutputPath%\
-xcopy /Y %PluginRoot%\HIBPOfflineCheck.csproj %OutputPath%\
-xcopy /Y %PluginRoot%\HIBPOfflineCheckExt.cs %OutputPath%\
-xcopy /Y %PluginRoot%\HIBPOfflineCheckOptions.cs %OutputPath%\
-xcopy /Y %PluginRoot%\HIBPOfflineCheckOptions.Designer.cs %OutputPath%\
-xcopy /Y %PluginRoot%\HIBPOfflineCheckOptions.resx %OutputPath%\
+xcopy /Y %PluginRoot%\..\OfflinePasswordCheck.sln %OutputPath%\
+xcopy /Y %PluginRoot%\OfflinePasswordCheck.csproj %OutputPath%\
+xcopy /Y %PluginRoot%\OfflinePasswordCheckExt.cs %OutputPath%\
+xcopy /Y %PluginRoot%\OfflinePasswordCheckOptions.cs %OutputPath%\
+xcopy /Y %PluginRoot%\OfflinePasswordCheckOptions.Designer.cs %OutputPath%\
+xcopy /Y %PluginRoot%\OfflinePasswordCheckOptions.resx %OutputPath%\
 xcopy /Y %PluginRoot%\HIBPOfflineColumnProv.cs %OutputPath%\
 xcopy /Y %PluginRoot%\ProgressDisplay.cs %OutputPath%\
 xcopy /Y %PluginRoot%\ProgressDisplay.Designer.cs %OutputPath%\
@@ -32,6 +32,6 @@ xcopy /Y %PluginRoot%\CreateBloomFilter.resx %OutputPath%\
 echo Creating PLGX: '%KeePassExe% --plgx-create "%OutputPath%"'
 %KeePassExe% --plgx-create "%OutputPath%"
 
-move /Y "%BuildPath%\plgx.plgx" %BuildPath%\HIBPOfflineCheck.plgx
+move /Y "%BuildPath%\plgx.plgx" %BuildPath%\OfflinePasswordCheck.plgx
 
 rmdir /S /Q "%OutputPath%\"

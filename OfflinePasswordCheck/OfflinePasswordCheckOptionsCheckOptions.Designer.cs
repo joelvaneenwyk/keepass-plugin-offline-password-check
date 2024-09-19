@@ -1,6 +1,6 @@
-﻿namespace HIBPOfflineCheck
+﻿namespace OfflinePasswordCheck
 {
-    partial class HIBPOfflineCheckOptions
+    partial class OfflinePasswordCheckOptions
     {
         /// <summary>
         /// Required designer variable.
@@ -65,9 +65,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pb_BannerImage)).BeginInit();
             this.groupBoxActions.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // groupBoxOptions
-            // 
+            //
             this.groupBoxOptions.BackColor = System.Drawing.SystemColors.Window;
             this.groupBoxOptions.Controls.Add(this.checkBoxExcludeRecycleBin);
             this.groupBoxOptions.Controls.Add(this.checkBoxExcludeExpired);
@@ -101,9 +101,9 @@
             this.groupBoxOptions.TabIndex = 0;
             this.groupBoxOptions.TabStop = false;
             this.groupBoxOptions.Text = "Options";
-            // 
+            //
             // checkBoxAutoCheck
-            // 
+            //
             this.checkBoxAutoCheck.AutoSize = true;
             this.checkBoxAutoCheck.Checked = true;
             this.checkBoxAutoCheck.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -113,26 +113,26 @@
             this.checkBoxAutoCheck.TabIndex = 23;
             this.checkBoxAutoCheck.Text = "Automatically check new or updated entries";
             this.checkBoxAutoCheck.UseVisualStyleBackColor = true;
-            // 
+            //
             // label8
-            // 
+            //
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(6, 220);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(74, 13);
             this.label8.TabIndex = 22;
             this.label8.Text = "Excluded text:";
-            // 
+            //
             // textBoxExcludedText
-            // 
+            //
             this.textBoxExcludedText.Location = new System.Drawing.Point(122, 217);
             this.textBoxExcludedText.Name = "textBoxExcludedText";
             this.textBoxExcludedText.Size = new System.Drawing.Size(111, 20);
             this.textBoxExcludedText.TabIndex = 21;
             this.textBoxExcludedText.Text = "Excluded";
-            // 
+            //
             // buttonCreateBloom
-            // 
+            //
             this.buttonCreateBloom.Location = new System.Drawing.Point(122, 99);
             this.buttonCreateBloom.Name = "buttonCreateBloom";
             this.buttonCreateBloom.Size = new System.Drawing.Size(138, 23);
@@ -140,9 +140,9 @@
             this.buttonCreateBloom.Text = "Generate Bloom Filter...";
             this.buttonCreateBloom.UseVisualStyleBackColor = true;
             this.buttonCreateBloom.Click += new System.EventHandler(this.buttonCreateBloom_Click);
-            // 
+            //
             // buttonBrowseBloom
-            // 
+            //
             this.buttonBrowseBloom.Location = new System.Drawing.Point(483, 71);
             this.buttonBrowseBloom.Name = "buttonBrowseBloom";
             this.buttonBrowseBloom.Size = new System.Drawing.Size(75, 23);
@@ -150,25 +150,25 @@
             this.buttonBrowseBloom.Text = "Browse...";
             this.buttonBrowseBloom.UseVisualStyleBackColor = true;
             this.buttonBrowseBloom.Click += new System.EventHandler(this.buttonBrowseBloom_Click);
-            // 
+            //
             // textBoxBloomFilter
-            // 
+            //
             this.textBoxBloomFilter.Location = new System.Drawing.Point(122, 73);
             this.textBoxBloomFilter.Name = "textBoxBloomFilter";
             this.textBoxBloomFilter.Size = new System.Drawing.Size(353, 20);
             this.textBoxBloomFilter.TabIndex = 18;
-            // 
+            //
             // label7
-            // 
+            //
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(6, 76);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(61, 13);
             this.label7.TabIndex = 17;
             this.label7.Text = "Bloom filter:";
-            // 
+            //
             // radioButtonBloom
-            // 
+            //
             this.radioButtonBloom.AutoSize = true;
             this.radioButtonBloom.Location = new System.Drawing.Point(318, 19);
             this.radioButtonBloom.Name = "radioButtonBloom";
@@ -178,18 +178,18 @@
             this.radioButtonBloom.Text = "Bloom Filter";
             this.radioButtonBloom.UseVisualStyleBackColor = true;
             this.radioButtonBloom.CheckedChanged += new System.EventHandler(this.radioButtonBloom_CheckedChanged);
-            // 
+            //
             // label6
-            // 
+            //
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(6, 21);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(70, 13);
             this.label6.TabIndex = 15;
             this.label6.Text = "Check mode:";
-            // 
+            //
             // radioButtonOnline
-            // 
+            //
             this.radioButtonOnline.AutoSize = true;
             this.radioButtonOnline.Location = new System.Drawing.Point(222, 19);
             this.radioButtonOnline.Name = "radioButtonOnline";
@@ -197,9 +197,9 @@
             this.radioButtonOnline.TabIndex = 14;
             this.radioButtonOnline.Text = "Online";
             this.radioButtonOnline.UseVisualStyleBackColor = true;
-            // 
+            //
             // radioButtonOffline
-            // 
+            //
             this.radioButtonOffline.AutoSize = true;
             this.radioButtonOffline.Checked = true;
             this.radioButtonOffline.Location = new System.Drawing.Point(122, 19);
@@ -210,9 +210,9 @@
             this.radioButtonOffline.Text = "Offline";
             this.radioButtonOffline.UseVisualStyleBackColor = true;
             this.radioButtonOffline.CheckedChanged += new System.EventHandler(this.radioButtonOffline_CheckedChanged);
-            // 
+            //
             // textBoxWarningDialog
-            // 
+            //
             this.textBoxWarningDialog.AcceptsReturn = true;
             this.textBoxWarningDialog.Location = new System.Drawing.Point(6, 371);
             this.textBoxWarningDialog.Multiline = true;
@@ -221,18 +221,18 @@
             this.textBoxWarningDialog.Size = new System.Drawing.Size(552, 52);
             this.textBoxWarningDialog.TabIndex = 12;
             this.textBoxWarningDialog.Text = "WARNING - INSECURE PASSWORD\r\n\r\nThis password is insecure and publicly known";
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(239, 142);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(252, 13);
             this.label5.TabIndex = 11;
             this.label5.Text = "(Enable new column in: View - Configure Columns...)";
-            // 
+            //
             // checkBoxWarningDialog
-            // 
+            //
             this.checkBoxWarningDialog.AutoSize = true;
             this.checkBoxWarningDialog.Location = new System.Drawing.Point(6, 348);
             this.checkBoxWarningDialog.Name = "checkBoxWarningDialog";
@@ -241,9 +241,9 @@
             this.checkBoxWarningDialog.Text = "Display warning message after editing insecure passwords:";
             this.checkBoxWarningDialog.UseVisualStyleBackColor = true;
             this.checkBoxWarningDialog.CheckedChanged += new System.EventHandler(this.checkBoxWarningDialog_CheckedChanged);
-            // 
+            //
             // buttonBrowse
-            // 
+            //
             this.buttonBrowse.Location = new System.Drawing.Point(483, 45);
             this.buttonBrowse.Name = "buttonBrowse";
             this.buttonBrowse.Size = new System.Drawing.Size(75, 23);
@@ -251,9 +251,9 @@
             this.buttonBrowse.Text = "Browse...";
             this.buttonBrowse.UseVisualStyleBackColor = true;
             this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
-            // 
+            //
             // checkBoxBreachCountDetails
-            // 
+            //
             this.checkBoxBreachCountDetails.AutoSize = true;
             this.checkBoxBreachCountDetails.Checked = true;
             this.checkBoxBreachCountDetails.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -263,76 +263,76 @@
             this.checkBoxBreachCountDetails.TabIndex = 8;
             this.checkBoxBreachCountDetails.Text = "Include breach count details for insecure passwords";
             this.checkBoxBreachCountDetails.UseVisualStyleBackColor = true;
-            // 
+            //
             // label4
-            // 
+            //
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(6, 194);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(71, 13);
             this.label4.TabIndex = 7;
             this.label4.Text = "Insecure text:";
-            // 
+            //
             // textBoxInsecureText
-            // 
+            //
             this.textBoxInsecureText.Location = new System.Drawing.Point(122, 191);
             this.textBoxInsecureText.Name = "textBoxInsecureText";
             this.textBoxInsecureText.Size = new System.Drawing.Size(111, 20);
             this.textBoxInsecureText.TabIndex = 7;
             this.textBoxInsecureText.Text = "Pwned";
-            // 
+            //
             // textBoxSecureText
-            // 
+            //
             this.textBoxSecureText.Location = new System.Drawing.Point(122, 165);
             this.textBoxSecureText.Name = "textBoxSecureText";
             this.textBoxSecureText.Size = new System.Drawing.Size(111, 20);
             this.textBoxSecureText.TabIndex = 6;
             this.textBoxSecureText.Text = "Secure";
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 168);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 13);
             this.label3.TabIndex = 4;
             this.label3.Text = "Secure text:";
-            // 
+            //
             // textBoxColumnName
-            // 
+            //
             this.textBoxColumnName.Location = new System.Drawing.Point(122, 139);
             this.textBoxColumnName.Name = "textBoxColumnName";
             this.textBoxColumnName.Size = new System.Drawing.Size(111, 20);
             this.textBoxColumnName.TabIndex = 5;
             this.textBoxColumnName.Text = "Have I been pwned?";
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Pwned passwords file:";
-            // 
+            //
             // textBoxFileName
-            // 
+            //
             this.textBoxFileName.Location = new System.Drawing.Point(122, 47);
             this.textBoxFileName.Name = "textBoxFileName";
             this.textBoxFileName.Size = new System.Drawing.Size(353, 20);
             this.textBoxFileName.TabIndex = 3;
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 142);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Column name:";
-            // 
+            //
             // buttonOK
-            // 
+            //
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.Location = new System.Drawing.Point(420, 560);
             this.buttonOK.Name = "buttonOK";
@@ -341,9 +341,9 @@
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
-            // 
+            //
             // buttonCancel
-            // 
+            //
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(501, 560);
@@ -353,17 +353,17 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
+            //
             // pb_BannerImage
-            // 
+            //
             this.pb_BannerImage.Location = new System.Drawing.Point(0, 0);
             this.pb_BannerImage.Name = "pb_BannerImage";
             this.pb_BannerImage.Size = new System.Drawing.Size(588, 60);
             this.pb_BannerImage.TabIndex = 3;
             this.pb_BannerImage.TabStop = false;
-            // 
+            //
             // groupBoxActions
-            // 
+            //
             this.groupBoxActions.Controls.Add(this.buttonClearAll);
             this.groupBoxActions.Controls.Add(this.buttonCheckAll);
             this.groupBoxActions.Location = new System.Drawing.Point(12, 66);
@@ -372,9 +372,9 @@
             this.groupBoxActions.TabIndex = 4;
             this.groupBoxActions.TabStop = false;
             this.groupBoxActions.Text = "Actions";
-            // 
+            //
             // buttonClearAll
-            // 
+            //
             this.buttonClearAll.Location = new System.Drawing.Point(150, 19);
             this.buttonClearAll.Name = "buttonClearAll";
             this.buttonClearAll.Size = new System.Drawing.Size(127, 23);
@@ -382,9 +382,9 @@
             this.buttonClearAll.Text = "Clear Status";
             this.buttonClearAll.UseVisualStyleBackColor = true;
             this.buttonClearAll.Click += new System.EventHandler(this.buttonClearAll_Click);
-            // 
+            //
             // buttonCheckAll
-            // 
+            //
             this.buttonCheckAll.Location = new System.Drawing.Point(6, 19);
             this.buttonCheckAll.Name = "buttonCheckAll";
             this.buttonCheckAll.Size = new System.Drawing.Size(138, 23);
@@ -392,9 +392,9 @@
             this.buttonCheckAll.Text = "Check All Passwords";
             this.buttonCheckAll.UseVisualStyleBackColor = true;
             this.buttonCheckAll.Click += new System.EventHandler(this.buttonCheckAll_Click);
-            // 
+            //
             // checkBoxExcludeExpired
-            // 
+            //
             this.checkBoxExcludeExpired.AutoSize = true;
             this.checkBoxExcludeExpired.Location = new System.Drawing.Point(6, 325);
             this.checkBoxExcludeExpired.Name = "checkBoxExcludeExpired";
@@ -402,9 +402,9 @@
             this.checkBoxExcludeExpired.TabIndex = 25;
             this.checkBoxExcludeExpired.Text = "Exclude expired entries from Find results";
             this.checkBoxExcludeExpired.UseVisualStyleBackColor = true;
-            // 
+            //
             // checkBoxExcludeRecycleBin
-            // 
+            //
             this.checkBoxExcludeRecycleBin.AutoSize = true;
             this.checkBoxExcludeRecycleBin.Location = new System.Drawing.Point(6, 302);
             this.checkBoxExcludeRecycleBin.Name = "checkBoxExcludeRecycleBin";
@@ -412,9 +412,9 @@
             this.checkBoxExcludeRecycleBin.TabIndex = 26;
             this.checkBoxExcludeRecycleBin.Text = "Exclude Recycle Bin entries from Find results";
             this.checkBoxExcludeRecycleBin.UseVisualStyleBackColor = true;
-            // 
-            // HIBPOfflineCheckOptions
-            // 
+            //
+            // OfflinePasswordCheckOptions
+            //
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -429,11 +429,11 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "HIBPOfflineCheckOptions";
+            this.Name = "OfflinePasswordCheckOptions";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HIBP Offline Check";
-            this.Load += new System.EventHandler(this.HIBPOfflineCheckOptions_Load);
+            this.Load += new System.EventHandler(this.OfflinePasswordCheckOptions_Load);
             this.groupBoxOptions.ResumeLayout(false);
             this.groupBoxOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_BannerImage)).EndInit();

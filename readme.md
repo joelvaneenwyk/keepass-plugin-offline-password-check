@@ -2,8 +2,8 @@
 
 ![screen](https://user-images.githubusercontent.com/981184/37559417-71ac2bc4-2a2e-11e8-8e3d-5877d9d7a999.png)
 
-This is a __[KeePass](https://keepass.info/)__ plugin for __[Have I been pwned](https://haveibeenpwned.com/)__.    
-It can perform both __offline__ and __online__ checks against the password breach list for any selected password entry.    
+This is a __[KeePass](https://keepass.info/)__ plugin for __[Have I been pwned](https://haveibeenpwned.com/)__.
+It can perform both __offline__ and __online__ checks against the password breach list for any selected password entry.
 Double click the plugin column to get an instant status check, or use the right click menu to perform the same check for all selected passwords.
 
 ## Motivation
@@ -11,7 +11,7 @@ Double click the plugin column to get an instant status check, or use the right 
 [Have I been pwned?](https://haveibeenpwned.com/) is an excellent tool for checking leaked passwords.
 While it does provide an API for securely checking the passwords online, some bits of a hashed password still need to be sent to the service when performing this type of check.
 
-This plugin offers the alternative of an offline check, by using the downloadable file provided by [Have I been pwned](https://haveibeenpwned.com/).    
+This plugin offers the alternative of an offline check, by using the downloadable file provided by [Have I been pwned](https://haveibeenpwned.com/).
 
 Online check mode is also provided as an option, being implemented using the [k-anonimity](https://haveibeenpwned.com/API/v2#SearchingPwnedPasswordsByRange) model required by the HIBP public API.
 
@@ -42,14 +42,14 @@ When running KeePass under Mono (on Ubuntu/Debian), if the plugin does not compi
 
 ## Installation
 
-- Download [HIBPOfflineCheck.plgx](https://github.com/mihaifm/HIBPOfflineCheck/releases/latest) from Releases.
+- Download [OfflinePasswordCheck.plgx](https://github.com/mihaifm/OfflinePasswordCheck/releases/latest) from Releases.
 - Copy it in the Plugins folder of the KeePass installation.
 
 ## Configuration
 
 To configure the plugin, open `Tools` -> `HIBP Offline Check...`
 
-![image](https://github.com/mihaifm/HIBPOfflineCheck/assets/981184/b134904f-5a8a-4cff-86cb-89fcd6abdf43)
+![image](https://github.com/mihaifm/OfflinePasswordCheck/assets/981184/b134904f-5a8a-4cff-86cb-89fcd6abdf43)
 
 If the Offline mode is selected then `Pwned passwords file` must be set to the password list file. If `Pwned passwords file` is not set then the plugin will try to find a password list file in the same location as `KeePass.exe`.
 
@@ -59,30 +59,30 @@ If you want to change `Column name`, a new column will be created with the new n
 
 ### Enable
 
-In KeePass, enable the plugin column in `View` -> `Configure Columns...` -> `Provided by Plugins`.     
+In KeePass, enable the plugin column in `View` -> `Configure Columns...` -> `Provided by Plugins`.
 Double clicking the `Have I been pwned?` column for any entry will display the password status. The status is also automatically checked when creating or updating an entry.
 
 ### Single password check
 
 __Double click__ a password entry under the `Have I been pwned?` column to get the status.
 
-![image](https://user-images.githubusercontent.com/981184/46235975-6ce7d700-c385-11e8-9a1e-2d473d825ba1.png)    
-    
+![image](https://user-images.githubusercontent.com/981184/46235975-6ce7d700-c385-11e8-9a1e-2d473d825ba1.png)
+
 ### Multiple passwords check
 
 __Select multiple entries__, then right click on the selection -> `Have I been pwned?` -> `Check`
-    
-![image](https://user-images.githubusercontent.com/981184/64819685-86465b00-d5b7-11e9-8e81-e95b31acbfd7.png)
-        
-### Check all passwords 
 
-To check all the passwords in the database:    
+![image](https://user-images.githubusercontent.com/981184/64819685-86465b00-d5b7-11e9-8e81-e95b31acbfd7.png)
+
+### Check all passwords
+
+To check all the passwords in the database:
 
 `Tools` -> `HIBP Offline Check...` -> `Check All Passwords`
 
 ### Automatic checks
 
-Newly created and updated entries are automatically checked. There is also an option to display a warning after creating an insecure password. 
+Newly created and updated entries are automatically checked. There is also an option to display a warning after creating an insecure password.
 
 ### Find all pwned passwords
 
@@ -103,4 +103,3 @@ You can build the plugin from source using Visual Studio: open the .sln file and
 Copy the .dll from `bin\Release` to the Plugins folder of the KeePass installation.
 
 **Enjoy!**
-

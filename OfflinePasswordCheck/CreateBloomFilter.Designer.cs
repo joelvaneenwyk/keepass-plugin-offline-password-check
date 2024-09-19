@@ -1,4 +1,4 @@
-﻿namespace HIBPOfflineCheck
+﻿namespace OfflinePasswordCheck
 {
     partial class CreateBloomFilter
     {
@@ -43,16 +43,16 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // textBoxOutput
-            // 
+            //
             this.textBoxOutput.Location = new System.Drawing.Point(9, 32);
             this.textBoxOutput.Name = "textBoxOutput";
             this.textBoxOutput.Size = new System.Drawing.Size(360, 20);
             this.textBoxOutput.TabIndex = 1;
-            // 
+            //
             // buttonSelectOutput
-            // 
+            //
             this.buttonSelectOutput.Location = new System.Drawing.Point(373, 30);
             this.buttonSelectOutput.Name = "buttonSelectOutput";
             this.buttonSelectOutput.Size = new System.Drawing.Size(70, 23);
@@ -60,9 +60,9 @@
             this.buttonSelectOutput.Text = "Browse...";
             this.buttonSelectOutput.UseVisualStyleBackColor = true;
             this.buttonSelectOutput.Click += new System.EventHandler(this.buttonSelectOutput_Click);
-            // 
+            //
             // buttonCreate
-            // 
+            //
             this.buttonCreate.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonCreate.Location = new System.Drawing.Point(152, 211);
             this.buttonCreate.Name = "buttonCreate";
@@ -71,17 +71,17 @@
             this.buttonCreate.Text = "Generate";
             this.buttonCreate.UseVisualStyleBackColor = true;
             this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
-            // 
+            //
             // progressBar
-            // 
+            //
             this.progressBar.Location = new System.Drawing.Point(12, 182);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(449, 23);
             this.progressBar.TabIndex = 4;
             this.progressBar.Visible = false;
-            // 
+            //
             // buttonSelectInput
-            // 
+            //
             this.buttonSelectInput.Location = new System.Drawing.Point(373, 30);
             this.buttonSelectInput.Name = "buttonSelectInput";
             this.buttonSelectInput.Size = new System.Drawing.Size(70, 23);
@@ -89,43 +89,43 @@
             this.buttonSelectInput.Text = "Browse...";
             this.buttonSelectInput.UseVisualStyleBackColor = true;
             this.buttonSelectInput.Click += new System.EventHandler(this.buttonSelectInput_Click);
-            // 
+            //
             // textBoxInput
-            // 
+            //
             this.textBoxInput.Location = new System.Drawing.Point(9, 32);
             this.textBoxInput.Name = "textBoxInput";
             this.textBoxInput.Size = new System.Drawing.Size(360, 20);
             this.textBoxInput.TabIndex = 6;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "HIBP passwords file";
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 16);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 8;
             this.label3.Text = "Bloom filter";
-            // 
+            //
             // labelInfo
-            // 
+            //
             this.labelInfo.AutoSize = true;
             this.labelInfo.Location = new System.Drawing.Point(9, 166);
             this.labelInfo.Name = "labelInfo";
             this.labelInfo.Size = new System.Drawing.Size(279, 13);
             this.labelInfo.TabIndex = 9;
             this.labelInfo.Text = "Generating the filter may take several minutes to complete, depending on your hardware.";
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.textBoxInput);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.buttonSelectInput);
@@ -135,9 +135,9 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input";
-            // 
+            //
             // groupBox2
-            // 
+            //
             this.groupBox2.Controls.Add(this.buttonSelectOutput);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.textBoxOutput);
@@ -147,9 +147,9 @@
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
-            // 
+            //
             // buttonCancel
-            // 
+            //
             this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonCancel.Location = new System.Drawing.Point(233, 211);
             this.buttonCancel.Name = "buttonCancel";
@@ -158,9 +158,9 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
+            //
             // CreateBloomFilter
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;

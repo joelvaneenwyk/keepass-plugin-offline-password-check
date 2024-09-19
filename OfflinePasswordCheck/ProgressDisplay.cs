@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace HIBPOfflineCheck
+namespace OfflinePasswordCheck
 {
     public partial class ProgressDisplay : Form
     {

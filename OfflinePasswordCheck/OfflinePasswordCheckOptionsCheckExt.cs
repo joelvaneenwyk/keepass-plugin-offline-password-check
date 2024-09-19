@@ -7,9 +7,9 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace HIBPOfflineCheck
+namespace OfflinePasswordCheck
 {
-    public sealed class HIBPOfflineCheckExt : Plugin
+    public sealed class OfflinePasswordCheckExt : Plugin
     {
         internal static IPluginHost Host { get; private set; }
         private HIBPOfflineColumnProv prov;
@@ -23,7 +23,7 @@ namespace HIBPOfflineCheck
             Terminate();
 
             if (host == null) return false;
-            
+
             Host = host;
             prov = new HIBPOfflineColumnProv() { Host = host };
 
@@ -63,7 +63,7 @@ namespace HIBPOfflineCheck
 
         private void ToolsMenuItemClick(object sender, EventArgs e)
         {
-            HIBPOfflineCheckOptions optionsForm = new HIBPOfflineCheckOptions(this);
+            OfflinePasswordCheckOptions optionsForm = new OfflinePasswordCheckOptions(this);
             optionsForm.ShowDialog();
         }
 
@@ -231,7 +231,7 @@ namespace HIBPOfflineCheck
         {
             get
             {
-                return "https://raw.githubusercontent.com/mihaifm/HIBPOfflineCheck/master/version.txt";
+                return "https://raw.githubusercontent.com/mihaifm/OfflinePasswordCheck/master/version.txt";
             }
         }
     }

@@ -16,7 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HIBPOfflineCheck
+namespace OfflinePasswordCheck
 {
     public sealed class HIBPOfflineColumnProv : ColumnProvider
     {
@@ -335,7 +335,7 @@ namespace HIBPOfflineCheck
 
         private void UpdateStatus(PwEntry passwordEntry)
         {
-            MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
+            MainForm mainForm = OfflinePasswordCheckExt.Host.MainWindow;
 
             passwordEntry.Strings.Set(PluginOptions.ColumnName, new ProtectedString(false, Status));
 
@@ -349,7 +349,7 @@ namespace HIBPOfflineCheck
 
         private void UpdateUI()
         {
-            MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
+            MainForm mainForm = OfflinePasswordCheckExt.Host.MainWindow;
             ListView lv = (mainForm.Controls.Find("m_lvEntries", true)[0] as ListView);
             UIScrollInfo scroll = UIUtil.GetScrollInfo(lv, true);
             mainForm.UpdateUI(false, null, false, null, true, null, true);
@@ -475,7 +475,7 @@ namespace HIBPOfflineCheck
                 RespectEntrySearchingDisabled = true
             };
 
-            MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
+            MainForm mainForm = OfflinePasswordCheckExt.Host.MainWindow;
             mainForm.UpdateUI(false, null, false, null, true, pgResults, false);
         }
 
@@ -483,7 +483,7 @@ namespace HIBPOfflineCheck
         {
             bulkCheck = true;
 
-            MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
+            MainForm mainForm = OfflinePasswordCheckExt.Host.MainWindow;
             PwEntry[] selectedEntries = mainForm.GetSelectedEntries();
 
             if (selectedEntries == null)
@@ -523,7 +523,7 @@ namespace HIBPOfflineCheck
         {
             bulkCheck = true;
 
-            MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
+            MainForm mainForm = OfflinePasswordCheckExt.Host.MainWindow;
             PwEntry[] selectedEntries = mainForm.GetSelectedEntries();
 
             if (selectedEntries == null)
@@ -544,7 +544,7 @@ namespace HIBPOfflineCheck
         {
             bulkCheck = true;
 
-            MainForm mainForm = HIBPOfflineCheckExt.Host.MainWindow;
+            MainForm mainForm = OfflinePasswordCheckExt.Host.MainWindow;
             PwEntry[] selectedEntries = mainForm.GetSelectedEntries();
 
             if (selectedEntries == null)

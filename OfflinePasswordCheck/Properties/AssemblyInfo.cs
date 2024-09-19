@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HIBPOfflineCheck")]
+[assembly: AssemblyTitle("OfflinePasswordCheck")]
 [assembly: AssemblyDescription("Offline check against the haveibeenpwned.com passwords file")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mihai Ciuraru")]

@@ -8,7 +8,7 @@ on:
 
 env:
   NUGET_URL: https://nuget.pkg.github.com/joelvaneenwyk/index.json
-  PROJECT_NAME: HIBPOfflineCheck
+  PROJECT_NAME: OfflinePasswordCheck
   PROJECT_VERSION: 1.7.11.0
 
 jobs:

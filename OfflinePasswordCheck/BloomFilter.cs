@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace HIBPOfflineCheck
+namespace OfflinePasswordCheck
 {
     public class BloomFilter
     {

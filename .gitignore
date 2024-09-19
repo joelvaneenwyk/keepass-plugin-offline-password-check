@@ -1,12 +1,12 @@
 .vs/
 packages/
-HIBPOfflineCheck/bin/
-HIBPOfflineCheck/obj/
-HIBPOfflineCheck/plgx/
+OfflinePasswordCheck/bin/
+OfflinePasswordCheck/obj/
+OfflinePasswordCheck/plgx/
 screen.png
 *.plgx
 release_checklist.txt
-HIBPOfflineCheck.plgx.asc
+OfflinePasswordCheck.plgx.asc
 *temp.bat
 *.csproj.user
 out/

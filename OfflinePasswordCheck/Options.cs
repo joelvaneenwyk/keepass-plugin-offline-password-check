@@ -1,4 +1,4 @@
-﻿namespace HIBPOfflineCheck
+﻿namespace OfflinePasswordCheck
 {
     public class Options
     {
@@ -11,7 +11,7 @@
 
         public static class Names
         {
-            private const string PLUGIN_NAMESPACE = "HIBPOfflineCheck";
+            private const string PLUGIN_NAMESPACE = "OfflinePasswordCheck";
 
             public const string HIBP_FILE_NAME = PLUGIN_NAMESPACE + ".HIBPFileName";
             public const string COLUMN_NAME = PLUGIN_NAMESPACE + ".ColumnName";

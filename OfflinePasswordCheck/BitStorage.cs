@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.IO;
 
-namespace HIBPOfflineCheck
+namespace OfflinePasswordCheck
 {
     class BitStorage
     {

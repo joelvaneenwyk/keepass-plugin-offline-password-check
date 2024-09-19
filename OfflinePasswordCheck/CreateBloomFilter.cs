@@ -6,17 +6,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HIBPOfflineCheck
+namespace OfflinePasswordCheck
 {
     public partial class CreateBloomFilter : Form
     {
-        private HIBPOfflineCheckExt ext;
+        private OfflinePasswordCheckExt ext;
 
         private CancellationTokenSource cancellationTokenSource;
         private Stopwatch stopwatch;
         private System.Windows.Forms.Timer timer;
 
-        public CreateBloomFilter(HIBPOfflineCheckExt ext)
+        public CreateBloomFilter(OfflinePasswordCheckExt ext)
         {
             InitializeComponent();
 
@@ -76,7 +76,7 @@ namespace HIBPOfflineCheck
             if (textBoxOutput.Text == string.Empty)
             {
                 MessageBox.Show(
-                    "Please specify an output file", 
+                    "Please specify an output file",
                     "Output file not found",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
