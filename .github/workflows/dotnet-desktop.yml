@@ -11,6 +11,10 @@ env:
   PROJECT_NAME: OfflinePasswordCheck
   PROJECT_VERSION: 1.7.11.0
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     strategy:
