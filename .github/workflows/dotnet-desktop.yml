@@ -38,14 +38,11 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v2
-
     - name: Restore Packages
-      run: nuget restore
+      run: dotnet restore
 
     - name: Build
-      run: msbuild "${{ env.PROJECT_NAME }}.sln" /p:Configuration="${{ matrix.configuration }}" /p:Platform="${{ matrix.platform }}"
+      run: dotnet build --configuration "${{ matrix.configuration }}" --platform "${{ matrix.platform }}"
 
     - name: Create Package
       run: |
