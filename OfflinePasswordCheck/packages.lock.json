@@ -2,6 +2,12 @@
   "version": 1,
   "dependencies": {
     ".NETFramework,Version=v4.6.2": {
+      "KeePass": {
+        "type": "Direct",
+        "requested": "[2.57.0.28775, )",
+        "resolved": "2.57.0.28775",
+        "contentHash": "qopO04BHqVmtj72cc4+JEUUC4ZcKm+Ya5YdPRlIjIpnNxOXuwf33xHhrDx80JfzDsPDsaDECDS4DHdyUuvogbA=="
+      },
       "System.Resources.Extensions": {
         "type": "Direct",
         "requested": "[8.0.0, )",
@@ -35,12 +41,6 @@
         "type": "Transitive",
         "resolved": "4.5.3",
         "contentHash": "3TIsJhD1EiiT0w2CcDMN/iSSwnNnsrnbzeVHSKkaEgV85txMprmuO+Yq2AdSbeVGcg28pdNDTPK87tJhX7VFHw=="
-      },
-      "keepass": {
-        "type": "Project",
-        "dependencies": {
-          "System.Resources.Extensions": "[8.0.0, )"
-        }
       }
     }
   }
