@@ -1,6 +1,19 @@
 {
   "version": 2,
   "dependencies": {
-    "net8.0-windows7.0": {}
+    "net8.0-windows7.0": {
+      "KeePass": {
+        "type": "Direct",
+        "requested": "[2.57.0.28775, )",
+        "resolved": "2.57.0.28775",
+        "contentHash": "qopO04BHqVmtj72cc4+JEUUC4ZcKm+Ya5YdPRlIjIpnNxOXuwf33xHhrDx80JfzDsPDsaDECDS4DHdyUuvogbA=="
+      },
+      "System.Resources.Extensions": {
+        "type": "Direct",
+        "requested": "[8.0.0, )",
+        "resolved": "8.0.0",
+        "contentHash": "psnQ6GRQOvt+evda5C4nD5EuV49mz2Tv0DD2JDVDEbE/TKoMukxSkGJcsBJ0pajpPuFRr67syFYlkJ4Wj6A5Zw=="
+      }
+    }
   }
 }
