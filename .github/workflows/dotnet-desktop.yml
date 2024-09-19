@@ -20,9 +20,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        platform: [x64]
         configuration: [Debug, Release]
-        platform: [x64, Any CPU]
     runs-on: windows-latest
+    name: Build // ${{ matrix.platform }} // ${{ matrix.configuration }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -42,19 +43,19 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --configuration "${{ matrix.configuration }}" --platform "${{ matrix.platform }}"
+      run: dotnet build --configuration "${{ matrix.configuration }}"
 
     - name: Create Package
       run: |
         dotnet pack "${{ env.PROJECT_NAME }}" \
-        -c Release \
-        -o ./out \
-        -p:PackageVersion=${{ env.PROJECT_VERSION }}
+        -c "${{ matrix.configuration }}" \
+        -o ./out/ \
+        -p:PackageVersion="${{ env.PROJECT_VERSION }}"
 
     - name: Publish to GitHub Packages
-      if: endsWith(github.ref, '/main')
+      if: endsWith(github.ref, '/main') && matrix.configuration == 'Release'
       run: |
         dotnet nuget push \
         ./out/${{ env.PROJECT_NAME }}.${{ env.PROJECT_VERSION }}.nupkg \
-        --source ${{ env.NUGET_URL }} \
-        --api-key ${{ secrets.GITHUB_TOKEN }}
+        --source "${{ env.NUGET_URL }}" \
+        --api-key "${{ secrets.GITHUB_TOKEN }}"
