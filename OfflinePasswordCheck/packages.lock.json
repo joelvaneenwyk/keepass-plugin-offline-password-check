@@ -14,18 +14,6 @@
           "Microsoft.SourceLink.GitLab": "1.0.0"
         }
       },
-      "KeePass": {
-        "type": "Direct",
-        "requested": "(, )",
-        "resolved": "2.41.0.37254",
-        "contentHash": "JO2bexGDddFUtCiRGekA5SP+xad7nmiGSNMyCXNdPoBFNcAQubZmGGtAkX3dWDmj3px6wazDLAx+ziPXibcEAA=="
-      },
-      "System.Resources.Extensions": {
-        "type": "Direct",
-        "requested": "(, )",
-        "resolved": "4.6.0",
-        "contentHash": "6aVCk8oTFZNT3Tx1jjiPi6+aipiJ3qMZYttAREKTRJidP50YvNeOn4PXrqzfA5qC23fLReq2JYp+nJwzj62HGw=="
-      },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
         "resolved": "1.0.0",
@@ -71,6 +59,9 @@
           "Microsoft.Build.Tasks.Git": "1.0.0",
           "Microsoft.SourceLink.Common": "1.0.0"
         }
+      },
+      "keepass": {
+        "type": "Project"
       }
     }
   }
